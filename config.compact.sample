@@ -1,0 +1,7 @@
+
+web_root=web
+
+in_index_html=login_dev.html
+out_css_prod=build/css/prod.css
+out_js_prod=build/js/prod.js
+out_index_html=build/login.html

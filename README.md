@@ -25,3 +25,9 @@ replaced in index.html with the included string.
     <script src="vendor/jquery-ui/jquery-ui.min.js"></script> <!-- @minimize skip --!>
     <script src="vendor/candy/candy.bundle.js"></script> <!-- @minimize replace with vendor/candy/candy.min.js --!>
     ...
+
+Configuration
+=============
+
+All input and output files are read from config.compact configuration file.
+Copy the sample file config.compact.sample and edit it.

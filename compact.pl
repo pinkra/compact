@@ -20,22 +20,39 @@
 #
 
 use strict;
-use CSS::Minifier;
-use JavaScript::Minifier;
+use File::Basename;
+use File::Path qw(make_path);
 
-my $web_root = "web";
+my $srcdir = dirname(__FILE__);
 
-my $in_index_html = "$web_root/index_dev.html";
-my $out_css_prod = "$web_root/css/prod.css";
-my $out_js_prod = "$web_root/js/prod.js";
-my $out_index_html = "$web_root/index.html";
+require $srcdir. '/CSS/Minifier.pm';
+require $srcdir. '/JavaScript/Minifier.pm';
 
-open FILE, "<$in_index_html" or die $!;
+my %prefs;
+
+open CONFIG, "<conf.compact" or die "no configuration file!";
+
+while (<CONFIG>) {
+    chomp;                  # no newline
+    s/#.*//;                # no comments
+    s/^\s+//;               # no leading white
+    s/\s+$//;               # no trailing white
+    next unless length;     # anything left?
+    my ($var, $value) = split(/\s*=\s*/, $_, 2);
+    $prefs{$var} = $value;
+}
+
+close CONFIG;
+
+open FILE, "<$prefs{'in_index_html'}" or die "no ". $prefs{'in_index_html'};
 my @lines = <FILE>;
 close FILE;
 
-open(OUTCSSFILE, ">$out_css_prod") or die;
-open(OUTJSFILE, ">$out_js_prod") or die;
+make_path(dirname $prefs{'out_css_prod'});
+open(OUTCSSFILE, ">$prefs{'out_css_prod'}") or die "no ". $prefs{'out_css_prod'};
+
+make_path(dirname $prefs{'out_js_prod'});
+open(OUTJSFILE, ">$prefs{'out_js_prod'}") or die "no ". $prefs{'out_js_prod'};
 
 
 # Compact js|css files
@@ -51,7 +68,7 @@ foreach my $line (@lines) {
     if ($line =~ /(link|script).*(href|src)="(.+?)"/) {
         print "minimizing $3..\n";
 
-        open(INFILE, "<$web_root/$3") or die;
+        open(INFILE, "<$prefs{'web_root'}/$3") or die "no ". $prefs{'web_root'}. "/$3";
 
         if ($1 eq 'link') {
             CSS::Minifier::minify(input => *INFILE, outfile => *OUTCSSFILE);
@@ -71,7 +88,8 @@ close(OUTJSFILE);
 # Rewrite index.html
 
 print "\nRewriting index.html..\n";
-open(OUTFILE, ">$out_index_html") or die;
+make_path(dirname $prefs{'out_index_html'});
+open(OUTFILE, ">$prefs{'out_index_html'}") or die "no ". $prefs{'out_index_html'};
 my $link_flag = 0;
 my $js_flag = 0;
 foreach my $line (@lines) {
@@ -89,8 +107,7 @@ foreach my $line (@lines) {
     if ($line =~ /<(link|script).*/) {
         if ($1 eq 'link') {
             if ($link_flag == 0) {
-                my $css_prod = $out_css_prod;
-                $css_prod =~ s/$web_root\///g;
+                my $css_prod = basename($prefs{'out_css_prod'});
                 $line = '    <link rel="stylesheet" href="'. $css_prod. '" type="text/css" />';
                 $link_flag = 1;
             } else {
@@ -99,8 +116,7 @@ foreach my $line (@lines) {
         }
         elsif ($1 eq 'script') {
             if ($js_flag == 0) {
-                my $js_prod = $out_js_prod;
-                $js_prod =~ s/$web_root\///g;
+                my $js_prod = basename($prefs{'out_js_prod'});
                 $line = '    <script src="'. $js_prod. '"></script>';
                 $js_flag = 1;
             } else {
