@@ -1,0 +1,43 @@
+Summary: compact
+Name: compact
+Version: @@VERSION@@
+Release: @@RELEASE@@
+License: GPL
+Group: Web
+Source0: %{name}-%{version}.tar.gz
+Packager: pinkra <jobezic@gmail.com>
+BuildRequires: nethserver-devtools
+
+BuildArch: noarch
+
+AutoReq: no
+
+%description
+Compact https://github.com/pinkra/compact
+
+%prep
+%setup -q
+
+%build
+#%{makedocs}
+
+%install
+make install DESTDIR=tmp_build
+(cd tmp_build ; find . -depth -print | cpio -dump $RPM_BUILD_ROOT)
+rm -f %{name}-%{version}-%{release}-filelist
+/sbin/e-smith/genfilelist $RPM_BUILD_ROOT > %{name}-%{version}-%{release}-filelist
+
+%post
+
+%preun
+
+%clean
+#rm -rf $RPM_BUILD_ROOT
+
+%files -f %{name}-%{version}-%{release}-filelist
+%defattr(-,root,root)
+
+
+%changelog
+* Mon Jun 30 2014 pinkra <jobezic@gmail.com> - 1.0.0-1.el6
+- First Version
