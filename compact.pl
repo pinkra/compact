@@ -25,8 +25,8 @@ use File::Path qw(make_path);
 
 my $srcdir = dirname(__FILE__);
 
-require $srcdir. '/CSS/Minifier.pm';
-require $srcdir. '/JavaScript/Minifier.pm';
+use CSS::Minifier.pm;
+use JavaScript::Minifier.pm;
 
 my %prefs;
 
