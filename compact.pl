@@ -25,8 +25,8 @@ use File::Path qw(make_path);
 
 my $srcdir = dirname(__FILE__);
 
-use CSS::Minifier.pm;
-use JavaScript::Minifier.pm;
+use CSS::Minifier;
+use JavaScript::Minifier;
 
 my %prefs;
 
