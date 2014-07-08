@@ -31,3 +31,4 @@ Configuration
 
 All input and output files are read from config.compact configuration file.
 Copy the sample file config.compact.sample and edit it.
+You can specify a different config file with '-c' option.

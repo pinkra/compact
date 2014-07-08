@@ -29,8 +29,13 @@ use CSS::Minifier;
 use JavaScript::Minifier;
 
 my %prefs;
+my $config_file = 'conf.compact';
 
-open CONFIG, "<conf.compact" or die "no configuration file!";
+if ($ARGV[0] eq '-c') {
+    $config_file = $ARGV[1];
+}
+
+open CONFIG, "<". $config_file or die "no configuration file!";
 
 while (<CONFIG>) {
     chomp;                  # no newline
