@@ -1,12 +1,11 @@
 Summary: compact
 Name: compact
-Version: @@VERSION@@
-Release: @@RELEASE@@
+Version: 1.0.0
+Release: 1%{?dist}
 License: GPL
 Group: Web
 Source0: %{name}-%{version}.tar.gz
 Packager: pinkra <jobezic@gmail.com>
-BuildRequires: nethserver-devtools
 
 BuildArch: noarch
 
@@ -19,23 +18,24 @@ Compact https://github.com/pinkra/compact
 %setup -q
 
 %build
-#%{makedocs}
 
 %install
 make install DESTDIR=tmp_build
 (cd tmp_build ; find . -depth -print | cpio -dump $RPM_BUILD_ROOT)
-rm -f %{name}-%{version}-%{release}-filelist
-/sbin/e-smith/genfilelist $RPM_BUILD_ROOT > %{name}-%{version}-%{release}-filelist
 
 %post
 
 %preun
 
 %clean
-#rm -rf $RPM_BUILD_ROOT
 
-%files -f %{name}-%{version}-%{release}-filelist
+%files
 %defattr(-,root,root)
+/usr/bin/compact.pl
+/usr/share/docs/%{name}-%{version}/config.compact.sample
+/usr/share/perl5/CSS/Minifier.pm
+/usr/share/perl5/JavaScript/Minifier.pm
+
 
 
 %changelog
