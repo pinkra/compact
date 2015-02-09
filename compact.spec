@@ -1,0 +1,1 @@
+rpm/centos/compact.spec
