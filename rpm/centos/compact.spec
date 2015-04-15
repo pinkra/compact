@@ -1,6 +1,6 @@
 Summary: compact
 Name: compact
-Version: 1.0.0
+Version: 1.0.1
 Release: 1%{?dist}
 License: GPL
 Group: Web
@@ -39,5 +39,11 @@ make install DESTDIR=tmp_build
 
 
 %changelog
+* Wed Apr 15 2015 pinkra <jobezic@gmail.com> - 1.0.1-1.el6
+- Add js and css prefix in config, fix comments
+
+* Mon Feb 09 2015 Giacomo Sanchietti <giacomo.sanchietti@nethesis.it> - 1.0.0-1.ns6
+- First public release
+
 * Mon Jun 30 2014 pinkra <jobezic@gmail.com> - 1.0.0-1.el6
 - First Version
