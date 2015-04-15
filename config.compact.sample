@@ -1,5 +1,7 @@
 
 web_root=web
+js_prod_prefix=/js
+css_prod_prefix=/css
 
 in_index_html=login_dev.html
 out_css_prod=build/css/prod.css
