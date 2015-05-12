@@ -1,6 +1,6 @@
 
 PACKAGE_NAME=compact
-PACKAGE_VERSION=1.0.2
+PACKAGE_VERSION=1.0.3
 
 install:
 	install -d $(DESTDIR)/usr/bin
