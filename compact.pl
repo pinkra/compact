@@ -113,7 +113,7 @@ foreach my $line (@lines) {
         if ($1 eq 'link') {
             if ($link_flag == 0) {
                 my $css_prod = basename($prefs{'out_css_prod'});
-                $line = '    <link rel="stylesheet" href="'. $prefs{'css_prod_prefix'}. '/'. $css_prod. '" type="text/css" />';
+                $line = '    <link rel="stylesheet" href="'. ($prefs{'css_prod_prefix'} ? $prefs{'css_prod_prefix'}. '/' : ''). $css_prod. '" type="text/css" />';
                 $link_flag = 1;
             } else {
                 next;
@@ -122,7 +122,7 @@ foreach my $line (@lines) {
         elsif ($1 eq 'script') {
             if ($js_flag == 0) {
                 my $js_prod = basename($prefs{'out_js_prod'});
-                $line = '    <script src="'. $prefs{js_prod_prefix}. '/'. $js_prod. '"></script>';
+                $line = '    <script src="'. ($prefs{'js_prod_prefix'} ? $prefs{'js_prod_prefix'}. '/' : ''). $js_prod. '"></script>';
                 $js_flag = 1;
             } else {
                 next;
