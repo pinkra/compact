@@ -65,12 +65,12 @@ open(OUTJSFILE, ">$prefs{'out_js_prod'}") or die "no ". $prefs{'out_js_prod'};
 foreach my $line (@lines) {
     chop($line);
 
-    if ($line =~ /(link|script).*(href|src)="(.+?)".*\@minimize.*(skip|replace)/) {
+    if ($line =~ /<(link|script).*(href|src)="(.+?)".*\@minimize.*(skip|replace)/) {
         print "skipping $3..\n";
         next;
     }
 
-    if ($line =~ /(link|script).*(href|src)="(.+?)"/) {
+    if ($line =~ /<(link|script).*(href|src)="(.+?)"/) {
         print "minimizing $3..\n";
 
         open(INFILE, "<$prefs{'web_root'}/$3") or die "no ". $prefs{'web_root'}. "/$3";
@@ -98,9 +98,9 @@ open(OUTFILE, ">$prefs{'out_index_html'}") or die "no ". $prefs{'out_index_html'
 my $link_flag = 0;
 my $js_flag = 0;
 foreach my $line (@lines) {
-    if ($line =~ /^.*(link|script).*(href|src)=".+?".*\@minimize.*(skip|replace).*$/) {
+    if ($line =~ /^.*<(link|script).*(href|src)=".+?".*\@minimize.*(skip|replace).*$/) {
         if ($3 eq 'replace') {
-            $line =~ /^.*(link|script).*(href|src)="(.+?)".*\@minimize.*replace with (.+?) /;
+            $line =~ /^.*<(link|script).*(href|src)="(.+?)".*\@minimize.*replace with (.+?) /;
             my $old = $3;
             my $new = $4;
             $line =~ s/$old/$new/g;
