@@ -1,6 +1,6 @@
 Summary: compact
 Name: compact
-Version: 1.0.1
+Version: 1.0.2
 Release: 1%{?dist}
 License: GPL
 Group: Web
@@ -39,6 +39,9 @@ make install DESTDIR=tmp_build
 
 
 %changelog
+* Tue May 12 2015 pinkra <jobezic@gmail.com> - 1.0.2-1.el6
+- Fix regex.
+
 * Wed Apr 15 2015 pinkra <jobezic@gmail.com> - 1.0.1-1.el6
 - Add js and css prefix in config, fix comments
 
